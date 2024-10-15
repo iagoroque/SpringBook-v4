@@ -1,8 +1,6 @@
 
-# SpringBook v3
-#### The microservice version
-
-![banner](https://github.com/OseiasYC/SpringBook-v3/blob/main/banner.png)
+# SpringBook v4
+#### The microservice with front-end version
 
 Springboot projects for managing and booking, labs, professors and subjects.
 
