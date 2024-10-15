@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Booking - Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "League Spartan", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+            color: #333;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo-container img {
+            width: 255px;
+        }
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #0271de;
+        }
+        .form-control {
+            border-radius: 10px;
+        }
+        .btn-primary {
+            background-color: #0271de;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #005bb5;
+        }
+        .fas.fa-user-circle {
+            font-size: 4em;
+            color: #0271de;
+        }
+        .login-icon {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/resources/static/images/logo-blue.png" alt="Springbook Logo">
+    </div>
+    <div class="container">
+        <h2 class="text-center">Login</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="login-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                const username = $('#username').val();
+                const password = $('#password').val();
+
+                if (username && password) {
+                    // Simulate login process (to be connected to the backend)
+                    alert("Login successful!");
+                    window.location.href = "lab_booking.html"; // Redirect to booking page after login
+                } else {
+                    alert("Please fill in all fields.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

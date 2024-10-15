@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Bookings</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "League Spartan", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+            color: #333;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .logo-container img {
+            width: 255px;
+        }
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #0271de;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 0;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: #0271de;
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+        .table {
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .approveBooking, .deleteBooking {
+            cursor: pointer;
+        }
+        .approveBooking:hover {
+            color: #28a745;
+        }
+        .deleteBooking:hover {
+            color: #dc3545;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Logo Section -->
+        <div class="logo-container">
+            <img src="/resources/static/images/logo-blue.png" alt="Springbook Logo">
+        </div>
+        
+        <h2 class="text-center">Manage Lab Bookings</h2>
+
+        <!-- Rest of the page content -->
+        <!-- Navigation between Pending and Approved requests -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="pendingTab" href="#">Pending Requests</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="approvedTab" href="#">Approved Requests</a>
+            </li>
+        </ul>
+
+        <!-- Pending Requests -->
+        <div id="pendingRequests" class="mt-4">
+            <h3>Pending Lab Bookings</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Lab</th>
+                        <th>Discipline</th>
+                        <th>Date & Time</th>
+                        <th>Professor</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="pendingBookingList">
+                    <!-- Pending booking data will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Approved Requests -->
+        <div id="approvedRequests" class="mt-4" style="display: none;">
+            <h3>Approved Lab Bookings</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Lab</th>
+                        <th>Discipline</th>
+                        <th>Date & Time</th>
+                        <th>Professor</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="approvedBookingList">
+                    <!-- Approved booking data will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Simulated data for pending and approved bookings
+            const pendingBookings = [
+                { id: 1, lab: "Lab A", discipline: "Physics", dateTime: "2024-10-18 10:00", professor: "Dr. Smith" },
+                { id: 2, lab: "Lab B", discipline: "Chemistry", dateTime: "2024-10-19 12:00", professor: "Dr. Johnson" }
+            ];
+
+            const approvedBookings = [
+                { id: 3, lab: "Lab C", discipline: "Biology", dateTime: "2024-10-20 14:00", professor: "Dr. Adams" }
+            ];
+
+            // Load pending bookings
+            function loadPendingBookings() {
+                $('#pendingBookingList').empty();
+                pendingBookings.forEach(function(booking, index) {
+                    $('#pendingBookingList').append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${booking.lab}</td>
+                            <td>${booking.discipline}</td>
+                            <td>${booking.dateTime}</td>
+                            <td>${booking.professor}</td>
+                            <td>
+                                <i class="fas fa-check-circle text-success approveBooking" style="cursor:pointer;" data-id="${booking.id}"></i>
+                                <i class="fas fa-trash-alt text-danger deleteBooking" style="cursor:pointer; margin-left: 10px;" data-id="${booking.id}"></i>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+
+            // Load approved bookings
+            function loadApprovedBookings() {
+                $('#approvedBookingList').empty();
+                approvedBookings.forEach(function(booking, index) {
+                    $('#approvedBookingList').append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${booking.lab}</td>
+                            <td>${booking.discipline}</td>
+                            <td>${booking.dateTime}</td>
+                            <td>${booking.professor}</td>
+                            <td>
+                                <i class="fas fa-trash-alt text-danger deleteBooking" style="cursor:pointer;" data-id="${booking.id}"></i>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+
+            // Initialize the page with pending bookings
+            loadPendingBookings();
+
+            // Switch between Pending and Approved requests
+            $('#pendingTab').click(function() {
+                $('#pendingRequests').show();
+                $('#approvedRequests').hide();
+                $('#pendingTab').addClass('active');
+                $('#approvedTab').removeClass('active');
+            });
+
+            $('#approvedTab').click(function() {
+                $('#approvedRequests').show();
+                $('#pendingRequests').hide();
+                $('#approvedTab').addClass('active');
+                $('#pendingTab').removeClass('active');
+                loadApprovedBookings(); // Load approved bookings when switching tab
+            });
+
+            // Approve booking (move from pending to approved)
+            $(document).on('click', '.approveBooking', function() {
+                const bookingId = $(this).data('id');
+                const bookingIndex = pendingBookings.findIndex(b => b.id === bookingId);
+
+                if (bookingIndex !== -1) {
+                    const approvedBooking = pendingBookings.splice(bookingIndex, 1)[0];
+                    approvedBookings.push(approvedBooking); // Move to approved
+                    loadPendingBookings(); // Refresh pending list
+                    alert(`Booking for ${approvedBooking.lab} approved!`);
+                }
+            });
+
+            // Delete booking (from pending or approved)
+            $(document).on('click', '.deleteBooking', function() {
+                const bookingId = $(this).data('id');
+                
+                // Try to delete from pending bookings first
+                let bookingIndex = pendingBookings.findIndex(b => b.id === bookingId);
+                if (bookingIndex !== -1) {
+                    pendingBookings.splice(bookingIndex, 1); // Remove from pending
+                    loadPendingBookings(); // Refresh list
+                    alert(`Pending booking with ID ${bookingId} deleted!`);
+                } else {
+                    // Try to delete from approved bookings
+                    bookingIndex = approvedBookings.findIndex(b => b.id === bookingId);
+                    if (bookingIndex !== -1) {
+                        approvedBookings.splice(bookingIndex, 1); // Remove from approved
+                        loadApprovedBookings(); // Refresh list
+                        alert(`Approved booking with ID ${bookingId} deleted!`);
+                    }
+                }
+            });
+        });
+    </script>
+    <footer>
+        &copy; 2024 Springbook v4.0. All Rights Reserved.
+    </footer>
+</body>
+</html>
