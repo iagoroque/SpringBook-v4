@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Flatpickr from 'react-flatpickr'; // Certifique-se de instalar a biblioteca Flatpickr
-import 'flatpickr/dist/flatpickr.css'; // Estilos do Flatpickr
-import Modal from 'react-modal'; // Você pode usar a biblioteca react-modal ou outra de sua preferência
+import Flatpickr from 'react-flatpickr';
+import 'flatpickr/dist/flatpickr.css';
+import Modal from 'react-modal';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-// Configuração do modal
-Modal.setAppElement('#root'); // Defina o elemento principal da aplicação
+Modal.setAppElement('#root');
 
 function LabProfessor() {
     const [reservations, setReservations] = useState([
@@ -54,10 +55,10 @@ function LabProfessor() {
     };
 
     return (
-        <div>
+        <div className="container mt-5">
             <h2>Your Reservation Requests</h2>
-            <button onClick={() => setModalIsOpen(true)}>Reserve</button>
-            <table>
+            <button className="btn btn-primary mb-3" onClick={() => setModalIsOpen(true)}>Reserve</button>
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -80,62 +81,74 @@ function LabProfessor() {
                 </tbody>
             </table>
 
-            {/* Modal for Reservation */}
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
                 contentLabel="Reserve Lab"
+                className="modal-dialog"
+                overlayClassName="modal-backdrop"
             >
-                <h2>Reserve Lab</h2>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Lab:
-                        <select name="lab" value={newReservation.lab} onChange={handleInputChange}>
-                            <option value="">Select Lab</option>
-                            {labs.filter(lab => lab.available).map(lab => (
-                                <option key={lab.id} value={lab.name}>{lab.name}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <label>
-                        Discipline:
-                        <select name="discipline" value={newReservation.discipline} onChange={handleInputChange}>
-                            <option value="">Select Discipline</option>
-                            {disciplines.map(discipline => (
-                                <option key={discipline} value={discipline}>{discipline}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <label>
-                        Date:
-                        <Flatpickr
-                            name="date"
-                            value={newReservation.date}
-                            onChange={date => setNewReservation(prev => ({ ...prev, date: date[0].toISOString().split('T')[0] }))}
-                            options={{ dateFormat: "Y-m-d", minDate: "today" }}
-                        />
-                    </label>
-                    <label>
-                        Start Time:
-                        <Flatpickr
-                            name="startTime"
-                            value={newReservation.startTime}
-                            onChange={time => setNewReservation(prev => ({ ...prev, startTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
-                            options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
-                        />
-                    </label>
-                    <label>
-                        End Time:
-                        <Flatpickr
-                            name="endTime"
-                            value={newReservation.endTime}
-                            onChange={time => setNewReservation(prev => ({ ...prev, endTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
-                            options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
-                        />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
-                <button onClick={() => setModalIsOpen(false)}>Close</button>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Reserve Lab</h5>
+                        <button type="button" className="close" onClick={() => setModalIsOpen(false)}>
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label>Lab:</label>
+                                <select className="form-control" name="lab" value={newReservation.lab} onChange={handleInputChange}>
+                                    <option value="">Select Lab</option>
+                                    {labs.filter(lab => lab.available).map(lab => (
+                                        <option key={lab.id} value={lab.name}>{lab.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Discipline:</label>
+                                <select className="form-control" name="discipline" value={newReservation.discipline} onChange={handleInputChange}>
+                                    <option value="">Select Discipline</option>
+                                    {disciplines.map(discipline => (
+                                        <option key={discipline} value={discipline}>{discipline}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Date:</label>
+                                <Flatpickr
+                                    className="form-control"
+                                    name="date"
+                                    value={newReservation.date}
+                                    onChange={date => setNewReservation(prev => ({ ...prev, date: date[0].toISOString().split('T')[0] }))}
+                                    options={{ dateFormat: "Y-m-d", minDate: "today" }}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Start Time:</label>
+                                <Flatpickr
+                                    className="form-control"
+                                    name="startTime"
+                                    value={newReservation.startTime}
+                                    onChange={time => setNewReservation(prev => ({ ...prev, startTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
+                                    options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>End Time:</label>
+                                <Flatpickr
+                                    className="form-control"
+                                    name="endTime"
+                                    value={newReservation.endTime}
+                                    onChange={time => setNewReservation(prev => ({ ...prev, endTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
+                                    options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
+                                />
+                            </div>
+                            <button type="submit" className="btn btn-success">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </Modal>
         </div>
     );

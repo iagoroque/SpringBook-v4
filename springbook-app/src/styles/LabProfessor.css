@@ -2,61 +2,99 @@ body {
     background-color: #f8f9fa;
     font-family: "League Spartan", sans-serif;
     color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-.logo-container {
-    text-align: center;
-    margin-bottom: 40px;
-}
-.logo-container img {
-    width: 255px;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 h2 {
-    font-size: 2.5em;
+    font-size: 2em;
     color: #0271de;
-    display: inline-block;
+    margin-bottom: 20px;
 }
 
-.modal-button {
-    display: inline-block;
-    float: right;
-    margin-left: 10px;
+.btn-primary {
+    background-color: #0271de;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #025f9c;
 }
 
 .table {
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .table th, .table td {
-    vertical-align: middle;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
     text-align: center;
 }
 
-.fas.fa-calendar-alt {
-    color: #ffffff;
-    padding-right: 5px;
-    padding-left: 5px;
-}
-
-.fas.fa-calendar-alt:hover {
-    color: #025f9c;
-}
-
-.modal-header {
+.table th {
     background-color: #0271de;
     color: white;
 }
 
-.modal-footer button {
+.modal-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: #f8f9fa; /* Ajuste a cor de fundo */
     border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1050;
+    outline: none;
+}
+
+.modal-content {
+    background-color: #f8f9fa; /* Ajuste a cor de fundo */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.modal-header, .modal-footer {
+    background-color: #0271de;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modal-footer button {
+    background-color: #025f9c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+    background-color: #023e73;
 }
 
 #messageArea {
     text-align: center;
     padding: 10px;
     border-radius: 5px;
+    margin-top: 20px;
     display: none;
 }
 
@@ -80,6 +118,7 @@ footer {
 .time-fields {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .time-fields .form-group {
