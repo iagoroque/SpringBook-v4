@@ -2,38 +2,12 @@ import React, { useState, useEffect } from "react";
 import bookingFetch from "../axios/BookingFetch";
 
 const LabSchedule = () => {
-    const reservations = [
-        {
-            id: 2,
-            lab: "Lab B",
-            discipline: "Physics",
-            professor: "Osvaldo",
-            date: "2024-10-18",
-            startTime: "10:00",
-            endTime: "12:00",
-        },
-        {
-            id: 2,
-            lab: "Lab C",
-            discipline: "Biology",
-            professor: "Elton",
-            date: "2024-10-19",
-            startTime: "14:00",
-            endTime: "16:00",
-        },
-    ];
-
     const [booking, setBooking] = useState([]);
-    const [selectedLab, setSelectedLab] = useState("");
-    const [selectedDiscipline, setSelectedDiscipline] = useState("");
-    const [date, setDate] = useState("");
-    const [startTime, setStartTime] = useState("");
-    const [endTime, setEndTime] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await bookingFetch.get(`/findAll`);
+                const response = await bookingFetch.get(`/findApproved`);
                 const data = response.data;
                 console.log(response.data);
                 setBooking(data);
@@ -42,16 +16,12 @@ const LabSchedule = () => {
             }
         };
 
-        const delay = setTimeout(() => {
-            fetchData();
-        }, 1000);
-
-        return () => clearTimeout(delay);
+        fetchData();
     }, []);
 
     const handleReservationSubmit = (e) => {
         e.preventDefault();
-        window.location.href = "/login"; // Ajuste conforme necessário
+        window.location.href = "/login";
     };
 
     return (
@@ -70,14 +40,19 @@ const LabSchedule = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {reservations.map((reservation, index) => (
-                        <tr key={reservation.id}>
-                            <td>{reservation.lab}</td>
-                            <td>{reservation.discipline}</td>
-                            <td>{reservation.professor}</td>
+                    {booking.map((reservation, index) => (
+                        <tr key={reservation.booking.id}>
+                            <td>{reservation.lab.lami}</td>
+                            <td>{reservation.subject.name}</td>
+                            <td>{reservation.professor.name}</td>
                             <td>
-                                {reservation.date} {reservation.startTime} -{" "}
-                                {reservation.endTime}
+                                {new Date(
+                                    reservation.booking.timeInit
+                                ).toLocaleString()}{" "}
+                                -{" "}
+                                {new Date(
+                                    reservation.booking.timeFinal
+                                ).toLocaleTimeString()}
                             </td>
                         </tr>
                     ))}

@@ -1,63 +1,100 @@
-import React, { useState } from 'react';
-import Flatpickr from 'react-flatpickr';
-import 'flatpickr/dist/flatpickr.css';
-import Modal from 'react-modal';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import React, { useState, useEffect } from "react";
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/flatpickr.css";
+import Modal from "react-modal";
+import bookingFetch from "../axios/BookingFetch";
+import labFetch from "../axios/LabFetch";
+import professorFetch from "../axios/ProfessorFetch";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
-function LabProfessor() {
-    const [reservations, setReservations] = useState([
-        { id: 1, lab: "Lab A", discipline: "Physics", date: "2024-10-18", startTime: "10:00", endTime: "12:00", status: "Pending" },
-        { id: 2, lab: "Lab C", discipline: "Biology", date: "2024-10-19", startTime: "14:00", endTime: "16:00", status: "Approved" }
-    ]);
-
+const LabProfessor = () => {
+    const [booking, setBooking] = useState([]);
+    const [lab, setLab] = useState([]);
+    const [professor, setProfessor] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [newReservation, setNewReservation] = useState({
-        lab: '',
-        discipline: '',
-        date: '',
-        startTime: '',
-        endTime: ''
-    });
+    const [professorId, setProfessorId] = useState("");
+    const [labId, setLabId] = useState("");
+    const [subjectId, setSubjectId] = useState("");
+    const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+    const [timeInit, setTimeInit] = useState("");
+    const [timeEnd, setTimeEnd] = useState("");
 
-    const labs = [
-        { id: 1, name: "Lab A", available: true },
-        { id: 2, name: "Lab B", available: false },
-        { id: 3, name: "Lab C", available: true }
-    ];
+    useEffect(() => {
+        
 
-    const disciplines = ["Physics", "Chemistry", "Biology"];
+        const fetchBooking = async () => {
+            setProfessorId(localStorage.getItem("proId"));
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setNewReservation(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+            try {
+                const response = await bookingFetch.get(`/findAll`);
+                const data = response.data;
+                console.log(response.data);
+                setBooking(data);
+            } catch (error) {
+                console.error("Erro ao buscar as reservas", error);
+            }
+
+            try {
+                const response2 = await labFetch.get(`/findAll`);
+                const data2 = response2.data;
+                console.log(response2.data);
+                setLab(data2);
+            } catch (error) {
+                console.error("Erro ao buscar os laboratórios", error);
+            }
+
+            try {
+                const response3 = await professorFetch.get(
+                    `/findSubjectsByProfessor/${professorId}`
+                );
+                const data3 = response3.data;
+                console.log(response3.data);
+                setProfessor(data3);
+            } catch (error) {
+                console.error("Erro ao buscar os Professores", error);
+            }
+        };
+
+        fetchBooking();
+    }, [professorId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newId = reservations.length + 1;
-        const reservationToAdd = { id: newId, ...newReservation, status: "Pending" };
-        
-        setReservations(prev => [...prev, reservationToAdd]);
+
+        const formattedStartTime = `${date}T${timeInit}:00`;
+        const formattedEndTime = `${date}T${timeEnd}:00`;
+
+        const newBooking = {
+            professorId: professorId,
+            labId: labId,
+            subjectId: subjectId,
+            timeInit: formattedStartTime,
+            timeFinal: formattedEndTime,
+        };
+
+        try {
+            const response = bookingFetch.post(`/save`, newBooking);
+
+            console.log("Sent to approve.", response.data);
+        } catch (error) {
+            console.error(error);
+        }
+
         setModalIsOpen(false);
-        setNewReservation({
-            lab: '',
-            discipline: '',
-            date: '',
-            startTime: '',
-            endTime: ''
-        });
     };
 
     return (
         <div className="container mt-5">
             <h2>Your Reservation Requests</h2>
-            <button className="btn btn-primary mb-3" onClick={() => setModalIsOpen(true)}>Reserve</button>
+            <button
+                className="btn btn-primary mb-3"
+                onClick={() => setModalIsOpen(true)}
+            >
+                Reserve
+            </button>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -69,13 +106,25 @@ function LabProfessor() {
                     </tr>
                 </thead>
                 <tbody>
-                    {reservations.map((reservation, index) => (
-                        <tr key={reservation.id}>
+                    {booking.map((reservation, index) => (
+                        <tr key={reservation.booking.id}>
                             <td>{index + 1}</td>
-                            <td>{reservation.lab}</td>
-                            <td>{reservation.discipline}</td>
-                            <td>{reservation.date} {reservation.startTime} - {reservation.endTime}</td>
-                            <td>{reservation.status}</td>
+                            <td>{reservation.lab.lami}</td>
+                            <td>{reservation.subject.name}</td>
+                            <td>
+                                {new Date(
+                                    reservation.booking.timeInit
+                                ).toLocaleString()}{" "}
+                                -{" "}
+                                {new Date(
+                                    reservation.booking.timeFinal
+                                ).toLocaleTimeString()}
+                            </td>
+                            <td>
+                                {reservation.booking.approved
+                                    ? "Aprovado"
+                                    : "Pendente"}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -91,7 +140,11 @@ function LabProfessor() {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Reserve Lab</h5>
-                        <button type="button" className="close" onClick={() => setModalIsOpen(false)}>
+                        <button
+                            type="button"
+                            className="close"
+                            onClick={() => setModalIsOpen(false)}
+                        >
                             <span>&times;</span>
                         </button>
                     </div>
@@ -99,19 +152,38 @@ function LabProfessor() {
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label>Lab:</label>
-                                <select className="form-control" name="lab" value={newReservation.lab} onChange={handleInputChange}>
+                                <select
+                                    className="form-control"
+                                    name="lab"
+                                    value={labId}
+                                    onChange={(e) => setLabId(e.target.value)}
+                                >
                                     <option value="">Select Lab</option>
-                                    {labs.filter(lab => lab.available).map(lab => (
-                                        <option key={lab.id} value={lab.name}>{lab.name}</option>
+                                    {lab.map((lab) => (
+                                        <option key={lab.id} value={lab.id}>
+                                            {lab.lami}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
                             <div className="form-group">
                                 <label>Discipline:</label>
-                                <select className="form-control" name="discipline" value={newReservation.discipline} onChange={handleInputChange}>
+                                <select
+                                    className="form-control"
+                                    name="discipline"
+                                    value={subjectId}
+                                    onChange={(e) =>
+                                        setSubjectId(e.target.value)
+                                    }
+                                >
                                     <option value="">Select Discipline</option>
-                                    {disciplines.map(discipline => (
-                                        <option key={discipline} value={discipline}>{discipline}</option>
+                                    {professor.map((professor) => (
+                                        <option
+                                            key={professor.id}
+                                            value={professor.id}
+                                        >
+                                            {professor.name}{" "}
+                                        </option>
                                     ))}
                                 </select>
                             </div>
@@ -120,9 +192,16 @@ function LabProfessor() {
                                 <Flatpickr
                                     className="form-control"
                                     name="date"
-                                    value={newReservation.date}
-                                    onChange={date => setNewReservation(prev => ({ ...prev, date: date[0].toISOString().split('T')[0] }))}
-                                    options={{ dateFormat: "Y-m-d", minDate: "today" }}
+                                    value={date}
+                                    onChange={(date) =>
+                                        setDate(
+                                            date[0].toISOString().split("T")[0]
+                                        )
+                                    }
+                                    options={{
+                                        dateFormat: "Y-m-d",
+                                        minDate: "today",
+                                    }}
                                 />
                             </div>
                             <div className="form-group">
@@ -130,9 +209,21 @@ function LabProfessor() {
                                 <Flatpickr
                                     className="form-control"
                                     name="startTime"
-                                    value={newReservation.startTime}
-                                    onChange={time => setNewReservation(prev => ({ ...prev, startTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
-                                    options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
+                                    value={timeInit}
+                                    onChange={(time) =>
+                                        setTimeInit(
+                                            time[0]
+                                                .toISOString()
+                                                .split("T")[1]
+                                                .slice(0, 5)
+                                        )
+                                    }
+                                    options={{
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i",
+                                        time_24hr: true,
+                                    }}
                                 />
                             </div>
                             <div className="form-group">
@@ -140,18 +231,33 @@ function LabProfessor() {
                                 <Flatpickr
                                     className="form-control"
                                     name="endTime"
-                                    value={newReservation.endTime}
-                                    onChange={time => setNewReservation(prev => ({ ...prev, endTime: time[0].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }))}
-                                    options={{ enableTime: true, noCalendar: true, dateFormat: "H:i", time_24hr: true }}
+                                    value={timeEnd}
+                                    onChange={(time) =>
+                                        setTimeEnd(
+                                            time[0]
+                                                .toISOString()
+                                                .split("T")[1]
+                                                .slice(0, 5)
+                                        )
+                                    }
+                                    options={{
+                                        enableTime: true,
+                                        noCalendar: true,
+                                        dateFormat: "H:i",
+                                        time_24hr: true,
+                                    }}
                                 />
                             </div>
-                            <button type="submit" className="btn btn-success">Submit</button>
+
+                            <button type="submit" className="btn btn-success">
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>
             </Modal>
         </div>
     );
-}
+};
 
 export default LabProfessor;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/LabAdmin.css'; // Importe o CSS correspondente
 
-function LabAdmin() {
+const LabAdmin = () => {
+
     const [pendingBookings, setPendingBookings] = useState([
         { id: 1, lab: "Lab A", discipline: "Physics", startDateTime: "2024-10-18 10:00", endDateTime: "2024-10-18 11:00", professor: "Dr. Smith" },
         { id: 2, lab: "Lab B", discipline: "Chemistry", startDateTime: "2024-10-19 12:00", endDateTime: "2024-10-19 13:00", professor: "Dr. Johnson" }
@@ -12,6 +13,13 @@ function LabAdmin() {
     ]);
 
     const [activeTab, setActiveTab] = useState('pending');
+
+    useEffect(() => {
+        const isAdmin = localStorage.getItem('isAdmin');
+        if (isAdmin !== 'true') {
+            window.location.href = "/login"
+        }
+    }, []);
 
     const approveBooking = (bookingId) => {
         const bookingIndex = pendingBookings.findIndex(b => b.id === bookingId);

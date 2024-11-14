@@ -7,8 +7,19 @@ function LoginForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username && password) {
-            alert("Login successful!");
-            window.location.href = "/lab_professor"; // Ajuste conforme necessário
+            if (username === 'osvaldo' && password === 'osvaldo') {
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('username', username);
+                localStorage.setItem('proId', 2);
+                alert("Login successful!");
+                window.location.href = "/lab_admin";
+            } else {
+                localStorage.setItem('isAdmin', 'false');
+                localStorage.setItem('username', username);
+                localStorage.setItem('proId', 1);
+                alert("Login successful!");
+                window.location.href = "/lab_professor";
+            }
         } else {
             alert("Please fill in all fields.");
         }
