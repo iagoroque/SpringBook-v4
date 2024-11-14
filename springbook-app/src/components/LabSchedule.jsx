@@ -1,24 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import bookingFetch from "../axios/BookingFetch";
 
-function LabSchedule() {
-    const labs = [
-        { id: 1, name: "Lab A", available: true },
-        { id: 2, name: "Lab B", available: false },
-        { id: 3, name: "Lab C", available: true }
-    ];
-
-    const disciplines = ["Physics", "Chemistry", "Biology"];
-
+const LabSchedule = () => {
     const reservations = [
-        { id: 1, lab: "Lab A", discipline: "Physics", professor: "Osvaldo", date: "2024-10-18", startTime: "10:00", endTime: "12:00" },
-        { id: 2, lab: "Lab C", discipline: "Biology", professor: "Elton", date: "2024-10-19", startTime: "14:00", endTime: "16:00" }
+        {
+            id: 2,
+            lab: "Lab B",
+            discipline: "Physics",
+            professor: "Osvaldo",
+            date: "2024-10-18",
+            startTime: "10:00",
+            endTime: "12:00",
+        },
+        {
+            id: 2,
+            lab: "Lab C",
+            discipline: "Biology",
+            professor: "Elton",
+            date: "2024-10-19",
+            startTime: "14:00",
+            endTime: "16:00",
+        },
     ];
 
-    const [selectedLab, setSelectedLab] = useState('');
-    const [selectedDiscipline, setSelectedDiscipline] = useState('');
-    const [date, setDate] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
+    const [booking, setBooking] = useState([]);
+    const [selectedLab, setSelectedLab] = useState("");
+    const [selectedDiscipline, setSelectedDiscipline] = useState("");
+    const [date, setDate] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await bookingFetch.get(`/findAll`);
+                const data = response.data;
+                console.log(response.data);
+                setBooking(data);
+            } catch (error) {
+                console.error("Erro ao buscar os cursos", error);
+            }
+        };
+
+        const delay = setTimeout(() => {
+            fetchData();
+        }, 1000);
+
+        return () => clearTimeout(delay);
+    }, []);
 
     const handleReservationSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +57,9 @@ function LabSchedule() {
     return (
         <div>
             <h2>Labs Schedule</h2>
-            <button onClick={() => window.location.href = "/login"}>Login</button>
+            <button onClick={() => (window.location.href = "/login")}>
+                Login
+            </button>
             <table>
                 <thead>
                     <tr>
@@ -44,13 +75,16 @@ function LabSchedule() {
                             <td>{reservation.lab}</td>
                             <td>{reservation.discipline}</td>
                             <td>{reservation.professor}</td>
-                            <td>{reservation.date} {reservation.startTime} - {reservation.endTime}</td>
+                            <td>
+                                {reservation.date} {reservation.startTime} -{" "}
+                                {reservation.endTime}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
     );
-}
+};
 
 export default LabSchedule;
