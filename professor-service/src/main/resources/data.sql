@@ -1,6 +1,6 @@
 --SUBJECTS:
     INSERT INTO subject (name)
-    VALUES ('Estrutura de Dados'), ('Banco de Dados I'), ('Banco de Dados II'), ('Lógica de Prog. e Algoritmos'), 
+    VALUES ('Big Data'), ('Tópicos Avançados em Programação'), ('Banco de Dados II'), ('Lógica de Prog. e Algoritmos'), 
     ('Arquitetura de Software'), ('Governança de TI'), ('Racicínio Lógico'), ('Compiladores'), ('Projeto Final');
 
 --PROFESSORS
@@ -8,22 +8,22 @@
         INSERT INTO professor (name)
         VALUES ('Fernando Cézar Reis Borges');
         INSERT INTO professor_subject (professor_id, subject_id)
-        VALUES (1, 1), (1, 2), (1, 3);
+        VALUES (1, 4), (1, 5), (1, 6);
 
         --OSVALDO
         INSERT INTO professor (name)
         VALUES ('Osvaldo Requião Mello');
         INSERT INTO professor_subject (professor_id, subject_id)
-        VALUES (2, 4), (2, 5), (2, 6);
+        VALUES (2, 7), (2, 8), (2, 9);
 
-        --HAMILTON
+        --ELTON
         INSERT INTO professor (name)
-        VALUES ('Hamilton Batista Sobrinho');
+        VALUES ('Elton Figueiredo da Silva');
         INSERT INTO professor_subject (professor_id, subject_id)
-        VALUES (3, 7), (3, 8), (3, 9);
+        VALUES (3, 4), (3, 2), (3, 9);
 
-        --NEIVA
+        --EVERTON
         INSERT INTO professor (name)
-        VALUES ('Antônio Cláudio Pedreira Neiva');
+        VALUES ('Everton Mendonça de Jesus');
         INSERT INTO professor_subject (professor_id, subject_id)
-        VALUES (4, 1), (4, 4), (4, 9);
+        VALUES (4, 1), (4, 3), (4, 5);

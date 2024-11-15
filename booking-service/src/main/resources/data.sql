@@ -1,3 +1,49 @@
 --BOOKING:
-    INSERT INTO booking (approved, lab_id, professor_id, subject_id, time_init, time_final, time_request)
-	VALUES (true, 1, 1, 1, '2023-10-22T10:00:00', '2023-10-22T12:00:00', CURRENT_TIMESTAMP);
+INSERT INTO
+    booking (
+        approved,
+        lab_id,
+        professor_id,
+        subject_id,
+        time_init,
+        time_final,
+        time_request
+    )
+VALUES
+    (
+        true,
+        1,
+        3,
+        2,
+        '2024-11-30T10:00:00',
+        '2024-11-30T12:00:00',
+        '2024-11-14 17:05:43.701305'
+    ),
+    (
+        true,
+        8,
+        2,
+        8,
+        '2024-12-03T19:00:00',
+        '2024-12-03T21:00:00',
+        '2024-11-14 17:05:43.701305'
+    ),
+    (
+        false,
+        5,
+        4,
+        1,
+        '2024-12-03T07:00:00',
+        '2024-12-03T09:00:00',
+        '2024-11-14 17:05:43.701305'
+    ),
+    (
+        false,
+        11,
+        3,
+        4,
+        '2024-12-30T10:00:00',
+        '2024-12-30T12:00:00',
+        '2024-11-14 17:05:43.701305'
+    );
+    

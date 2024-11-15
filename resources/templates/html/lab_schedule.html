@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Booking - Reserve a Lab</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/resources/static/css/lab_schedule.css">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/resources/static/images/logo-blue.png" alt="Springbook Logo">
+    </div>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Labs Schedule</h2>
+            <!-- Botão para acionar modal -->
+            <button class="btn btn-primary modal-button" id="openModal"><i class="fas fa-user"></i> Login</button>
+        </div>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Lami</th>
+                    <th>Discipline</th>
+                    <th>Professor</th>
+                    <th>Date & Time</th>
+                </tr>
+            </thead>
+            <tbody id="reservationList">
+                <!-- Os pedidos de reserva serão carregados dinamicamente aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/en.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="/resources/static/js/lab_schedule.js"></script>
+    <footer>
+        &copy; 2024 Springbook v4.0. All Rights Reserved.
+    </footer>
+</body>
+</html>

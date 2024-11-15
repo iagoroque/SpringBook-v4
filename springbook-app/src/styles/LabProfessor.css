@@ -1,0 +1,131 @@
+body {
+    background-color: #f8f9fa;
+    font-family: "League Spartan", sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    color: #0271de;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #0271de;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #025f9c;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.table th {
+    background-color: #0271de;
+    color: white;
+}
+
+.modal-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    background-color: #f8f9fa; /* Ajuste a cor de fundo */
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1050;
+    outline: none;
+}
+
+.modal-content {
+    background-color: #f8f9fa; /* Ajuste a cor de fundo */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.modal-header, .modal-footer {
+    background-color: #0271de;
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modal-footer button {
+    background-color: #025f9c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+    background-color: #023e73;
+}
+
+#messageArea {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: none;
+}
+
+#messageArea.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+#messageArea.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.time-fields {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.time-fields .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.time-fields .form-group:last-child {
+    margin-right: 0;
+}

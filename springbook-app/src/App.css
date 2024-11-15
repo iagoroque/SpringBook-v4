@@ -1,0 +1,154 @@
+body {
+  background-color: #f8f9fa;
+  font-family: "League Spartan", sans-serif;
+  color: #333;
+  font-optical-sizing: auto;
+  font-weight: normal; /* Corrigido para 'normal' */
+  font-style: normal;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo-container img {
+  width: 255px;
+}
+
+h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #0271de;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-radius: 0;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #0271de;
+  color: white;
+  border-radius: 5px 5px 0 0;
+}
+
+.table {
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table th, .table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.approveBooking, .deleteBooking {
+  cursor: pointer;
+}
+
+.approveBooking:hover {
+  color: #28a745;
+}
+
+.deleteBooking:hover {
+  color: #dc3545;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.modal-button {
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+}
+
+.fas.fa-calendar-alt {
+  color: #ffffff;
+  padding: 0 5px;
+}
+
+.fas.fa-calendar-alt:hover {
+  color: #025f9c;
+}
+
+.modal-header {
+  background-color: #0271de;
+  color: white;
+}
+
+.modal-footer button {
+  border-radius: 5px;
+}
+
+#messageArea {
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+#messageArea.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+#messageArea.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.time-fields {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-fields .form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.time-fields .form-group:last-child {
+  margin-right: 0;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #0271de;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #005bb5;
+}
+
+.fas.fa-user-circle {
+  font-size: 4em;
+  color: #0271de;
+}
+
+.login-icon {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: bold;
+}
