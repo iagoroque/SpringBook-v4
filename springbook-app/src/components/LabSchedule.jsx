@@ -12,17 +12,12 @@ const LabSchedule = () => {
                 console.log(response.data);
                 setBooking(data);
             } catch (error) {
-                console.error("Erro ao buscar os cursos", error);
+                console.error("Erro ao buscar as reservas", error);
             }
         };
 
         fetchData();
     }, []);
-
-    const handleReservationSubmit = (e) => {
-        e.preventDefault();
-        window.location.href = "/login";
-    };
 
     return (
         <div>

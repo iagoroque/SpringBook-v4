@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function LoginForm() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username && password) {
-            if (username === 'osvaldo' && password === 'osvaldo') {
-                localStorage.setItem('isAdmin', 'true');
-                localStorage.setItem('username', username);
-                localStorage.setItem('proId', 2);
+            if (username === "osvaldo" && password === "1") {
+                localStorage.setItem("isAdmin", "true");
+                localStorage.setItem("username", username);
+                localStorage.setItem("proId", 2);
                 alert("Login successful!");
                 window.location.href = "/lab_admin";
-            } else {
-                localStorage.setItem('isAdmin', 'false');
-                localStorage.setItem('username', username);
-                localStorage.setItem('proId', 1);
+            } else if (username === "fernando" && password === "123") {
+                localStorage.setItem("isAdmin", "false");
+                localStorage.setItem("username", username);
+                localStorage.setItem("proId", 1);
+                alert("Login successful!");
+                window.location.href = "/lab_professor";
+            } else if (username === "elton" && password === "123") {
+                localStorage.setItem("isAdmin", "false");
+                localStorage.setItem("username", username);
+                localStorage.setItem("proId", 3);
+                alert("Login successful!");
+                window.location.href = "/lab_professor";
+            } else if (username === "everton" && password === "123") {
+                localStorage.setItem("isAdmin", "false");
+                localStorage.setItem("username", username);
+                localStorage.setItem("proId", 4);
                 alert("Login successful!");
                 window.location.href = "/lab_professor";
             }
@@ -28,7 +40,8 @@ function LoginForm() {
     return (
         <div className="container">
             <div className="logo-container">
-                <img src="images/logo-blue.png" alt="Logo" /> {/* Substitua "logo.png" pelo caminho correto da sua imagem */}
+                <img src="images/logo-blue.png" alt="Logo" />{" "}
+                {/* Substitua "logo.png" pelo caminho correto da sua imagem */}
             </div>
             <h2>Login</h2>
             <div className="login-icon">
@@ -57,7 +70,9 @@ function LoginForm() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button className="btn-primary login-button" type="submit">Login</button>
+                <button className="btn-primary login-button" type="submit">
+                    Login
+                </button>
             </form>
         </div>
     );

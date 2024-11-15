@@ -1,54 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import '../styles/LabAdmin.css'; // Importe o CSS correspondente
+import React, { useState, useEffect } from "react";
+import "../styles/LabAdmin.css"; // Importe o CSS correspondente
+import bookingFetch from "../axios/BookingFetch";
 
 const LabAdmin = () => {
-
-    const [pendingBookings, setPendingBookings] = useState([
-        { id: 1, lab: "Lab A", discipline: "Physics", startDateTime: "2024-10-18 10:00", endDateTime: "2024-10-18 11:00", professor: "Dr. Smith" },
-        { id: 2, lab: "Lab B", discipline: "Chemistry", startDateTime: "2024-10-19 12:00", endDateTime: "2024-10-19 13:00", professor: "Dr. Johnson" }
-    ]);
-
-    const [approvedBookings, setApprovedBookings] = useState([
-        { id: 3, lab: "Lab C", discipline: "Biology", startDateTime: "2024-10-20 14:00", endDateTime: "2024-10-20 15:00", professor: "Dr. Adams" }
-    ]);
-
-    const [activeTab, setActiveTab] = useState('pending');
+    const [pendingBookings, setPendingBookings] = useState([]);
+    const [approvedBookings, setApprovedBookings] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const [activeTab, setActiveTab] = useState("pending");
 
     useEffect(() => {
-        const isAdmin = localStorage.getItem('isAdmin');
-        if (isAdmin !== 'true') {
-            window.location.href = "/login"
+        const isAdmin = localStorage.getItem("isAdmin");
+        if (isAdmin !== "true") {
+            window.location.href = "/login";
         }
-    }, []);
 
-    const approveBooking = (bookingId) => {
-        const bookingIndex = pendingBookings.findIndex(b => b.id === bookingId);
-        if (bookingIndex !== -1) {
-            const approvedBooking = pendingBookings[bookingIndex];
-            setPendingBookings(pendingBookings.filter(b => b.id !== bookingId));
-            setApprovedBookings([...approvedBookings, approvedBooking]);
-            alert(`Booking for ${approvedBooking.lab} approved!`);
+        const fetchBooking = async () => {
+            try {
+                const response = await bookingFetch.get(`/findPending`);
+                const data = response.data;
+                console.log(response.data);
+                setPendingBookings(data);
+            } catch (error) {
+                console.error("Erro ao buscar as reservas pendentes", error);
+            }
+
+            try {
+                const response2 = await bookingFetch.get(`/findApproved`);
+                const data2 = response2.data;
+                console.log(response2.data);
+                setApprovedBookings(data2);
+            } catch (error) {
+                console.error("Erro ao buscar as reservas aprovadas", error);
+            }
+        };
+
+        fetchBooking();
+    }, [refresh]);
+
+    const approveBooking = async (bookingId) => {
+        const confirmed = window.confirm(
+            "Tem certeza de que deseja aprovar esta reserva?"
+        );
+        if (confirmed) {
+            try {
+                await bookingFetch.put(`/approve/${bookingId}`);
+                console.log(`Reserva com ID ${bookingId} foi aprovada!`);
+            } catch (error) {
+                console.error("Erro ao aprovar a reserva", error);
+            }
         }
+        setRefresh((prev) => !prev);
     };
 
-    const deleteBooking = (bookingId, isPending) => {
-        if (isPending) {
-            setPendingBookings(pendingBookings.filter(b => b.id !== bookingId));
-            alert(`Pending booking with ID ${bookingId} deleted!`);
-        } else {
-            setApprovedBookings(approvedBookings.filter(b => b.id !== bookingId));
-            alert(`Approved booking with ID ${bookingId} deleted!`);
+    const deleteBooking = async (bookingId) => {
+        const confirmed = window.confirm(
+            "Tem certeza de que deseja deletar esta reserva?"
+        );
+        if (confirmed) {
+            try {
+                await bookingFetch.delete(`/delete/${bookingId}`);
+                console.log(`Reserva com ID ${bookingId} foi deletada!`);
+            } catch (error) {
+                console.error("Erro ao deletar a reserva", error);
+            }
         }
+        setRefresh((prev) => !prev);
     };
 
     return (
         <div className="lab-admin">
             <div className="tabs">
-                <button className={activeTab === 'pending' ? 'active' : ''} onClick={() => setActiveTab('pending')}>Pending Requests</button>
-                <button className={activeTab === 'approved' ? 'active' : ''} onClick={() => setActiveTab('approved')}>Approved Requests</button>
+                <button
+                    className={activeTab === "pending" ? "active" : ""}
+                    onClick={() => setActiveTab("pending")}
+                >
+                    Pending Requests
+                </button>
+                <button
+                    className={activeTab === "approved" ? "active" : ""}
+                    onClick={() => setActiveTab("approved")}
+                >
+                    Approved Requests
+                </button>
             </div>
 
-            {activeTab === 'pending' && (
+            {activeTab === "pending" && (
                 <table className="booking-table">
                     <thead>
                         <tr>
@@ -62,15 +98,38 @@ const LabAdmin = () => {
                     </thead>
                     <tbody>
                         {pendingBookings.map((booking, index) => (
-                            <tr key={booking.id}>
+                            <tr key={booking.booking.id}>
                                 <td>{index + 1}</td>
-                                <td>{booking.lab}</td>
-                                <td>{booking.discipline}</td>
-                                <td>{`${booking.startDateTime.split(" ")[0]} ${booking.startDateTime.split(" ")[1]} - ${booking.endDateTime.split(" ")[1]}`}</td>
-                                <td>{booking.professor}</td>
+                                <td>{booking.lab.lami}</td>
+                                <td>{booking.subject.name}</td>
                                 <td>
-                                    <i className="fas fa-check-circle text-success" style={{ cursor: 'pointer' }} onClick={() => approveBooking(booking.id)}></i>
-                                    <i className="fas fa-trash-alt text-danger" style={{ cursor: 'pointer', marginLeft: '10px' }} onClick={() => deleteBooking(booking.id, true)}></i>
+                                    {new Date(
+                                        booking.booking.timeInit
+                                    ).toLocaleString()}{" "}
+                                    -{" "}
+                                    {new Date(
+                                        booking.booking.timeFinal
+                                    ).toLocaleTimeString()}
+                                </td>
+                                <td>{booking.professor.name}</td>
+                                <td>
+                                    <i
+                                        className="fas fa-check-circle text-success"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                            approveBooking(booking.booking.id)
+                                        }
+                                    ></i>
+                                    <i
+                                        className="fas fa-trash-alt text-danger"
+                                        style={{
+                                            cursor: "pointer",
+                                            marginLeft: "10px",
+                                        }}
+                                        onClick={() =>
+                                            deleteBooking(booking.booking.id)
+                                        }
+                                    ></i>
                                 </td>
                             </tr>
                         ))}
@@ -78,7 +137,7 @@ const LabAdmin = () => {
                 </table>
             )}
 
-            {activeTab === 'approved' && (
+            {activeTab === "approved" && (
                 <table className="booking-table">
                     <thead>
                         <tr>
@@ -92,14 +151,28 @@ const LabAdmin = () => {
                     </thead>
                     <tbody>
                         {approvedBookings.map((booking, index) => (
-                            <tr key={booking.id}>
+                            <tr key={booking.booking.id}>
                                 <td>{index + 1}</td>
-                                <td>{booking.lab}</td>
-                                <td>{booking.discipline}</td>
-                                <td>{`${booking.startDateTime.split(" ")[0]} ${booking.startDateTime.split(" ")[1]} - ${booking.endDateTime.split(" ")[1]}`}</td>
-                                <td>{booking.professor}</td>
+                                <td>{booking.lab.lami}</td>
+                                <td>{booking.subject.name}</td>
                                 <td>
-                                    <i className="fas fa-trash-alt text-danger" style={{ cursor: 'pointer' }} onClick={() => deleteBooking(booking.id, false)}></i>
+                                    {new Date(
+                                        booking.booking.timeInit
+                                    ).toLocaleString()}{" "}
+                                    -{" "}
+                                    {new Date(
+                                        booking.booking.timeFinal
+                                    ).toLocaleTimeString()}
+                                </td>
+                                <td>{booking.professor.name}</td>
+                                <td>
+                                    <i
+                                        className="fas fa-trash-alt text-danger"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() =>
+                                            deleteBooking(booking.booking.id)
+                                        }
+                                    ></i>
                                 </td>
                             </tr>
                         ))}
@@ -108,6 +181,6 @@ const LabAdmin = () => {
             )}
         </div>
     );
-}
+};
 
 export default LabAdmin;

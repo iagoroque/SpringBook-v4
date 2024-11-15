@@ -21,15 +21,14 @@ const LabProfessor = () => {
     const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
     const [timeInit, setTimeInit] = useState("");
     const [timeEnd, setTimeEnd] = useState("");
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
-        
-
         const fetchBooking = async () => {
             setProfessorId(localStorage.getItem("proId"));
 
             try {
-                const response = await bookingFetch.get(`/findAll`);
+                const response = await bookingFetch.get(`/findByProfessor/${professorId}`);
                 const data = response.data;
                 console.log(response.data);
                 setBooking(data);
@@ -59,9 +58,9 @@ const LabProfessor = () => {
         };
 
         fetchBooking();
-    }, [professorId]);
+    }, [professorId, refresh]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formattedStartTime = `${date}T${timeInit}:00`;
@@ -76,7 +75,7 @@ const LabProfessor = () => {
         };
 
         try {
-            const response = bookingFetch.post(`/save`, newBooking);
+            const response = await bookingFetch.post(`/save`, newBooking);
 
             console.log("Sent to approve.", response.data);
         } catch (error) {
@@ -84,6 +83,7 @@ const LabProfessor = () => {
         }
 
         setModalIsOpen(false);
+        setRefresh((prev) => !prev);
     };
 
     return (
