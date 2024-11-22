@@ -1,154 +1,137 @@
-body {
-  background-color: #f8f9fa;
-  font-family: "League Spartan", sans-serif;
-  color: #333;
-  font-optical-sizing: auto;
-  font-weight: normal; /* Corrigido para 'normal' */
-  font-style: normal;
+/* Estilo para a logo */
+.logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px; /* Ajuste conforme necessário */
+  padding-top: 20px;
 }
 
-.container {
-  margin-top: 100px;
-}
-
-.logo-container {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.logo-container img {
-  width: 255px;
-}
-
-h2 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #0271de;
-}
-
-.nav-tabs .nav-link {
-  border: none;
-  border-radius: 0;
-  margin: 0 5px;
-  font-weight: bold;
-}
-
-.nav-tabs .nav-link.active {
-  background-color: #0271de;
-  color: white;
-  border-radius: 5px 5px 0 0;
-}
-
-.table {
-  border-radius: 5px;
+/* Estilo para a tabela */
+.table-container {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1200px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-.table th, .table td {
-  vertical-align: middle;
-  text-align: center;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.approveBooking, .deleteBooking {
-  cursor: pointer;
-}
-
-.approveBooking:hover {
-  color: #28a745;
-}
-
-.deleteBooking:hover {
-  color: #dc3545;
-}
-
-footer {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 0.9em;
-  color: #aaa;
-}
-
-.modal-button {
-  display: inline-block;
-  float: right;
-  margin-left: 10px;
-}
-
-.fas.fa-calendar-alt {
-  color: #ffffff;
-  padding: 0 5px;
-}
-
-.fas.fa-calendar-alt:hover {
-  color: #025f9c;
-}
-
-.modal-header {
+th {
   background-color: #0271de;
   color: white;
-}
-
-.modal-footer button {
-  border-radius: 5px;
-}
-
-#messageArea {
-  text-align: center;
   padding: 10px;
-  border-radius: 5px;
-  display: none;
+  text-align: left;
 }
 
-#messageArea.success {
-  background-color: #d4edda;
-  color: #155724;
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-#messageArea.error {
-  background-color: #f8d7da;
-  color: #721c24;
+tr:hover {
+  background-color: #f1f1f1;
 }
 
-.time-fields {
-  display: flex;
-  justify-content: space-between;
-}
-
-.time-fields .form-group {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.time-fields .form-group:last-child {
-  margin-right: 0;
-}
-
-.form-control {
-  border-radius: 10px;
-}
-
+/* Estilo para os botões */
 .btn-primary {
   background-color: #0271de;
+  color: white;
   border: none;
-  border-radius: 10px;
-  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .btn-primary:hover {
-  background-color: #005bb5;
+  background-color: #025bb5;
 }
 
-.fas.fa-user-circle {
-  font-size: 4em;
-  color: #0271de;
+/* Estilo para a div principal */
+.main-container {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+  min-height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.login-icon {
-  text-align: center;
-  margin-bottom: 20px;
+.custom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.form-group label {
-  font-weight: bold;
+.custom-modal {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0271de;
+  color: white;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+  box-sizing: border-box;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.25rem;
+  overflow: hidden;
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.custom-modal .content {
+  padding: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the children horizontally */
+}
+
+.form-group {
+  width: 100%; /* Ensure input fields take full width */
+  margin-bottom: 15px; /* Add some space between fields */
+}
+
+.btn-primary login-button {
+  width: 100%; /* Make the button take full width */
+  max-width: 200px; /* Optional: Set a max width for the button */
+  margin-top: 10px; /* Add some space above the button */
+  align-self: center; /* Center the button within the form */
 }

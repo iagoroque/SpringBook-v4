@@ -5,8 +5,9 @@ import Modal from "react-modal";
 import bookingFetch from "../axios/BookingFetch";
 import labFetch from "../axios/LabFetch";
 import professorFetch from "../axios/ProfessorFetch";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css"; 
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import '../App.css'; 
 
 Modal.setAppElement("#root");
 
@@ -87,55 +88,58 @@ const LabProfessor = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="main-container mt-5">
+            <img src="/images/logo-blue.png" alt="Logo" className="logo" />
             <h2>Your Reservation Requests</h2>
             <button
-                className="btn btn-primary mb-3"
+                className="btn-primary mb-3"
                 onClick={() => setModalIsOpen(true)}
             >
                 Reserve
             </button>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Lab</th>
-                        <th>Discipline</th>
-                        <th>Date & Time</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {booking.map((reservation, index) => (
-                        <tr key={reservation.booking.id}>
-                            <td>{index + 1}</td>
-                            <td>{reservation.lab.lami}</td>
-                            <td>{reservation.subject.name}</td>
-                            <td>
-                                {new Date(
-                                    reservation.booking.timeInit
-                                ).toLocaleString()}{" "}
-                                -{" "}
-                                {new Date(
-                                    reservation.booking.timeFinal
-                                ).toLocaleTimeString()}
-                            </td>
-                            <td>
-                                {reservation.booking.approved
-                                    ? "Aprovado"
-                                    : "Pendente"}
-                            </td>
+            <div className="table-container">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lab</th>
+                            <th>Discipline</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {booking.map((reservation, index) => (
+                            <tr key={reservation.booking.id}>
+                                <td>{index + 1}</td>
+                                <td>{reservation.lab.lami}</td>
+                                <td>{reservation.subject.name}</td>
+                                <td>
+                                    {new Date(
+                                        reservation.booking.timeInit
+                                    ).toLocaleString()}{" "}
+                                    -{" "}
+                                    {new Date(
+                                        reservation.booking.timeFinal
+                                    ).toLocaleTimeString()}
+                                </td>
+                                <td>
+                                    {reservation.booking.approved
+                                        ? "Aprovado"
+                                        : "Pendente"}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
                 contentLabel="Reserve Lab"
-                className="modal-dialog"
-                overlayClassName="modal-backdrop"
+                className="custom-modal"
+                overlayClassName="custom-overlay"
             >
                 <div className="modal-content">
                     <div className="modal-header">

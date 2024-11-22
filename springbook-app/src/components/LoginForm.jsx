@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../App.css'; // Importando o CSS global
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -38,10 +39,9 @@ function LoginForm() {
     };
 
     return (
-        <div className="container">
+        <div className="main-container">
             <div className="logo-container">
-                <img src="images/logo-blue.png" alt="Logo" />{" "}
-                {/* Substitua "logo.png" pelo caminho correto da sua imagem */}
+                <img src="images/logo-blue.png" alt="Logo" className="logo" />
             </div>
             <h2>Login</h2>
             <div className="login-icon">
