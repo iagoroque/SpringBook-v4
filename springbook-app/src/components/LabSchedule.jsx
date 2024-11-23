@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import bookingFetch from "../axios/BookingFetch";
+import '../App.css'; // Importando o CSS global
 
 const LabSchedule = () => {
     const [booking, setBooking] = useState([]);
@@ -20,41 +21,39 @@ const LabSchedule = () => {
     }, []);
 
     return (
-        <div>
+        <div className="main-container">
+            <img src="/images/logo-blue.png" alt="Logo" className="logo" />
             <h2>Labs Schedule</h2>
-            <button onClick={() => (window.location.href = "/login")}>
+            <button className="btn-primary" onClick={() => (window.location.href = "/login")}>
                 Login
             </button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Lab</th>
-                        <th>Discipline</th>
-                        <th>Professor</th>
-                        <th>Date & Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {booking.map((reservation, index) => (
-                        <tr key={reservation.booking.id}>
-                            <td>{reservation.lab.lami}</td>
-                            <td>{reservation.subject.name}</td>
-                            <td>{reservation.professor.name}</td>
-                            <td>
-                                {new Date(
-                                    reservation.booking.timeInit
-                                ).toLocaleString()}{" "}
-                                -{" "}
-                                {new Date(
-                                    reservation.booking.timeFinal
-                                ).toLocaleTimeString()}
-                            </td>
+            <div className="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lab</th>
+                            <th>Discipline</th>
+                            <th>Professor</th>
+                            <th>Date & Time</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {booking.map((reservation) => (
+                            <tr key={reservation.booking.id}>
+                                <td>{reservation.lab.lami}</td>
+                                <td>{reservation.subject.name}</td>
+                                <td>{reservation.professor.name}</td>
+                                <td>
+                                    {new Date(reservation.booking.timeInit).toLocaleString()} -{" "}
+                                    {new Date(reservation.booking.timeFinal).toLocaleTimeString()}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
-};
+}
 
 export default LabSchedule;
