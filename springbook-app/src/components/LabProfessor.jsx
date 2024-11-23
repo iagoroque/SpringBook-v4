@@ -5,9 +5,9 @@ import Modal from "react-modal";
 import bookingFetch from "../axios/BookingFetch";
 import labFetch from "../axios/LabFetch";
 import professorFetch from "../axios/ProfessorFetch";
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import '../App.css'; 
+import "../App.css";
 
 Modal.setAppElement("#root");
 
@@ -29,7 +29,9 @@ const LabProfessor = () => {
             setProfessorId(localStorage.getItem("proId"));
 
             try {
-                const response = await bookingFetch.get(`/findByProfessor/${professorId}`);
+                const response = await bookingFetch.get(
+                    `/findByProfessor/${professorId}`
+                );
                 const data = response.data;
                 console.log(response.data);
                 setBooking(data);
@@ -91,12 +93,7 @@ const LabProfessor = () => {
         <div className="main-container mt-5">
             <img src="/images/logo-blue.png" alt="Logo" className="logo" />
             <h2>Your Reservation Requests</h2>
-            <button
-                className="btn-primary mb-3"
-                onClick={() => setModalIsOpen(true)}
-            >
-                Reserve
-            </button>
+
             <div className="table-container">
                 <table className="table">
                     <thead>
@@ -133,6 +130,13 @@ const LabProfessor = () => {
                     </tbody>
                 </table>
             </div>
+            <button
+                id="btnreserve"
+                className="btn-primary mb-3"
+                onClick={() => setModalIsOpen(true)}
+            >
+                Reserve
+            </button>
 
             <Modal
                 isOpen={modalIsOpen}
@@ -149,10 +153,10 @@ const LabProfessor = () => {
                             className="close"
                             onClick={() => setModalIsOpen(false)}
                         >
-                            <span>&times;</span>
+                            <span id="x">&times;</span>
                         </button>
                     </div>
-                    <div className="modal-body">
+                    <div id="modalbody" className="modal-body">
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label>Lab:</label>
@@ -216,10 +220,13 @@ const LabProfessor = () => {
                                     value={timeInit}
                                     onChange={(time) =>
                                         setTimeInit(
-                                            time[0]
-                                                .toISOString()
-                                                .split("T")[1]
-                                                .slice(0, 5)
+                                            time[0].toLocaleTimeString(
+                                                "en-GB",
+                                                {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                }
+                                            )
                                         )
                                     }
                                     options={{
@@ -238,10 +245,13 @@ const LabProfessor = () => {
                                     value={timeEnd}
                                     onChange={(time) =>
                                         setTimeEnd(
-                                            time[0]
-                                                .toISOString()
-                                                .split("T")[1]
-                                                .slice(0, 5)
+                                            time[0].toLocaleTimeString(
+                                                "en-GB",
+                                                {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                }
+                                            )
                                         )
                                     }
                                     options={{
@@ -252,8 +262,11 @@ const LabProfessor = () => {
                                     }}
                                 />
                             </div>
-
-                            <button type="submit" className="btn btn-success">
+                            <button
+                                id="btnsubmit"
+                                type="submit"
+                                className="btn btn-success"
+                            >
                                 Submit
                             </button>
                         </form>

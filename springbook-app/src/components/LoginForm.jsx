@@ -8,30 +8,31 @@ function LoginForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (username && password) {
-            if (username === "osvaldo" && password === "1") {
+            if (username === "admin" && password === "1") {
                 localStorage.setItem("isAdmin", "true");
                 localStorage.setItem("username", username);
-                localStorage.setItem("proId", 2);
                 alert("Login successful!");
                 window.location.href = "/lab_admin";
-            } else if (username === "fernando" && password === "123") {
+            } else if (username === "elton" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
                 localStorage.setItem("proId", 1);
                 alert("Login successful!");
                 window.location.href = "/lab_professor";
-            } else if (username === "elton" && password === "123") {
+            } else if (username === "fernando" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
-                localStorage.setItem("proId", 3);
+                localStorage.setItem("proId", 2);
                 alert("Login successful!");
                 window.location.href = "/lab_professor";
             } else if (username === "everton" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
-                localStorage.setItem("proId", 4);
+                localStorage.setItem("proId", 3);
                 alert("Login successful!");
                 window.location.href = "/lab_professor";
+            } else {
+                alert("Invalid username or password.");
             }
         } else {
             alert("Please fill in all fields.");
@@ -70,7 +71,7 @@ function LoginForm() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button className="btn-primary login-button" type="submit">
+                <button id="btnlogin" className="btn-primary login-button" type="submit">
                     Login
                 </button>
             </form>

@@ -1,12 +1,11 @@
-/* Estilo para a logo */
 .logo {
   display: block;
   margin: 0 auto;
-  width: 150px; /* Ajuste conforme necessário */
+  width: 300px;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-/* Estilo para a tabela */
 .table-container {
   margin: 20px auto;
   width: 90%;
@@ -15,6 +14,12 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 table {
@@ -38,7 +43,6 @@ tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Estilo para os botões */
 .btn-primary {
   background-color: #0271de;
   color: white;
@@ -53,6 +57,31 @@ tr:hover {
 
 .btn-primary:hover {
   background-color: #025bb5;
+}
+
+#btnlogin {
+  position: unset; 
+}
+
+#btnreserve {
+  position: unset;
+  margin-left: 45%;
+}
+
+#btnsubmit {
+  margin-left: 180px;
+  margin-bottom: 1rem;
+}
+
+#x {
+  position: absolute;
+  margin-left: 219px;
+  margin-top: -22px;
+}
+
+#modalbody {
+  width: 75%;
+  margin-left: 70px;
 }
 
 /* Estilo para a div principal */
@@ -92,7 +121,7 @@ tr:hover {
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #0271de;
   color: white;
