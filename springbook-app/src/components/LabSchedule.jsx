@@ -23,7 +23,7 @@ const LabSchedule = () => {
     return (
         <div className="main-container">
             <img src="/images/logo-blue.png" alt="Logo" className="logo" />
-            <h2>Labs Schedule</h2>
+            <h2>Cronograma das Reservas dos Laboratórios</h2>
             <button className="btn-primary" onClick={() => (window.location.href = "/login")}>
                 Login
             </button>
@@ -32,9 +32,9 @@ const LabSchedule = () => {
                     <thead>
                         <tr>
                             <th>Lab</th>
-                            <th>Discipline</th>
+                            <th>Disciplina</th>
                             <th>Professor</th>
-                            <th>Date & Time</th>
+                            <th>Data & Hora</th>
                         </tr>
                     </thead>
                     <tbody>

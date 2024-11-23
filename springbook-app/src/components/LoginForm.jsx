@@ -11,31 +11,31 @@ function LoginForm() {
             if (username === "admin" && password === "1") {
                 localStorage.setItem("isAdmin", "true");
                 localStorage.setItem("username", username);
-                alert("Login successful!");
+                alert("Login bem-sucedido!");
                 window.location.href = "/lab_admin";
             } else if (username === "elton" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
                 localStorage.setItem("proId", 1);
-                alert("Login successful!");
+                alert("Login bem-sucedido!");
                 window.location.href = "/lab_professor";
             } else if (username === "fernando" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
                 localStorage.setItem("proId", 2);
-                alert("Login successful!");
+                alert("Login bem-sucedido!");
                 window.location.href = "/lab_professor";
             } else if (username === "everton" && password === "123") {
                 localStorage.setItem("isAdmin", "false");
                 localStorage.setItem("username", username);
                 localStorage.setItem("proId", 3);
-                alert("Login successful!");
+                alert("Login bem-sucedido!");
                 window.location.href = "/lab_professor";
             } else {
-                alert("Invalid username or password.");
+                alert("Nome de usuário ou senha inválidos.");
             }
         } else {
-            alert("Please fill in all fields.");
+            alert("Por favor, preencha todos os campos.");
         }
     };
 
@@ -50,23 +50,23 @@ function LoginForm() {
             </div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="username">Nome de Usuário</label>
                     <input
                         className="form-control input-field"
                         type="text"
                         id="username"
-                        placeholder="Username"
+                        placeholder="Usuário"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Senha</label>
                     <input
                         className="form-control input-field"
                         type="password"
                         id="password"
-                        placeholder="Password"
+                        placeholder="Senha"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />

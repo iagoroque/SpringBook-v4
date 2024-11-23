@@ -80,7 +80,7 @@ const LabProfessor = () => {
         try {
             const response = await bookingFetch.post(`/save`, newBooking);
 
-            console.log("Sent to approve.", response.data);
+            console.log("Enviado para aprovar.", response.data);
         } catch (error) {
             console.error(error);
         }
@@ -92,7 +92,7 @@ const LabProfessor = () => {
     return (
         <div className="main-container mt-5">
             <img src="/images/logo-blue.png" alt="Logo" className="logo" />
-            <h2>Your Reservation Requests</h2>
+            <h2>Suas Reservas</h2>
 
             <div className="table-container">
                 <table className="table">
@@ -100,8 +100,8 @@ const LabProfessor = () => {
                         <tr>
                             <th>#</th>
                             <th>Lab</th>
-                            <th>Discipline</th>
-                            <th>Date & Time</th>
+                            <th>Disciplina</th>
+                            <th>Data & Hora</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -147,7 +147,7 @@ const LabProfessor = () => {
             >
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Reserve Lab</h5>
+                        <h5 className="modal-title">Solicitar Reserva</h5>
                         <button
                             type="button"
                             className="close"
@@ -166,7 +166,7 @@ const LabProfessor = () => {
                                     value={labId}
                                     onChange={(e) => setLabId(e.target.value)}
                                 >
-                                    <option value="">Select Lab</option>
+                                    <option value="">Selecione o Lab</option>
                                     {lab.map((lab) => (
                                         <option key={lab.id} value={lab.id}>
                                             {lab.lami}
@@ -175,7 +175,7 @@ const LabProfessor = () => {
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Discipline:</label>
+                                <label>Disciplina:</label>
                                 <select
                                     className="form-control"
                                     name="discipline"
@@ -184,7 +184,7 @@ const LabProfessor = () => {
                                         setSubjectId(e.target.value)
                                     }
                                 >
-                                    <option value="">Select Discipline</option>
+                                    <option value="">Selecione a Disciplina</option>
                                     {professor.map((professor) => (
                                         <option
                                             key={professor.id}
@@ -196,7 +196,7 @@ const LabProfessor = () => {
                                 </select>
                             </div>
                             <div className="form-group">
-                                <label>Date:</label>
+                                <label>Data:</label>
                                 <Flatpickr
                                     className="form-control"
                                     name="date"
@@ -213,7 +213,7 @@ const LabProfessor = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Start Time:</label>
+                                <label>Hora de Início:</label>
                                 <Flatpickr
                                     className="form-control"
                                     name="startTime"
@@ -238,7 +238,7 @@ const LabProfessor = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>End Time:</label>
+                                <label>Hora de Fim:</label>
                                 <Flatpickr
                                     className="form-control"
                                     name="endTime"
@@ -267,7 +267,7 @@ const LabProfessor = () => {
                                 type="submit"
                                 className="btn btn-success"
                             >
-                                Submit
+                                Solicitar
                             </button>
                         </form>
                     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import bookingFetch from "../axios/BookingFetch";
-import '../App.css'; // Importando o CSS global
+import "../App.css"; // Importando o CSS global
 
 const LabAdmin = () => {
     const [pendingBookings, setPendingBookings] = useState([]);
@@ -13,7 +13,9 @@ const LabAdmin = () => {
                 const responsePending = await bookingFetch.get(`/findPending`);
                 setPendingBookings(responsePending.data);
 
-                const responseApproved = await bookingFetch.get(`/findApproved`);
+                const responseApproved = await bookingFetch.get(
+                    `/findApproved`
+                );
                 setApprovedBookings(responseApproved.data);
             } catch (error) {
                 console.error("Erro ao buscar as reservas", error);
@@ -56,18 +58,18 @@ const LabAdmin = () => {
     return (
         <div className="main-container">
             <img src="/images/logo-blue.png" alt="Logo" className="logo" />
-            <h2>Admin Panel - Reservations</h2>
+            <h2>Painel de Administração - Reservas</h2>
             <div className="table-container">
-                <h3>Pending Requests</h3>
+                <h3>Reservas Pendentes</h3>
                 <table className="table">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Lab</th>
-                            <th>Discipline</th>
+                            <th>Disciplina</th>
                             <th>Professor</th>
-                            <th>Date & Time</th>
-                            <th>Actions</th>
+                            <th>Data & Hora</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,14 +80,21 @@ const LabAdmin = () => {
                                 <td>{booking.subject.name}</td>
                                 <td>{booking.professor.name}</td>
                                 <td>
-                                    {new Date(booking.booking.timeInit).toLocaleString()} -{" "}
-                                    {new Date(booking.booking.timeFinal).toLocaleTimeString()}
+                                    {new Date(
+                                        booking.booking.timeInit
+                                    ).toLocaleString()}{" "}
+                                    -{" "}
+                                    {new Date(
+                                        booking.booking.timeFinal
+                                    ).toLocaleTimeString()}
                                 </td>
                                 <td>
                                     <i
                                         className="fas fa-check-circle text-success"
                                         style={{ cursor: "pointer" }}
-                                        onClick={() => approveBooking(booking.booking.id)}
+                                        onClick={() =>
+                                            approveBooking(booking.booking.id)
+                                        }
                                     ></i>
                                     <i
                                         className="fas fa-trash-alt text-danger"
@@ -93,7 +102,9 @@ const LabAdmin = () => {
                                             cursor: "pointer",
                                             marginLeft: "10px",
                                         }}
-                                        onClick={() => deleteBooking(booking.booking.id)}
+                                        onClick={() =>
+                                            deleteBooking(booking.booking.id)
+                                        }
                                     ></i>
                                 </td>
                             </tr>
@@ -102,16 +113,16 @@ const LabAdmin = () => {
                 </table>
             </div>
             <div className="table-container">
-                <h3>Approved Requests</h3>
+                <h3>Reservas Aprovadas</h3>
                 <table className="table">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Lab</th>
-                            <th>Discipline</th>
+                            <th>Disciplina</th>
                             <th>Professor</th>
-                            <th>Date & Time</th>
-                            <th>Actions</th>
+                            <th>Data & Hora</th>
+                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,14 +133,21 @@ const LabAdmin = () => {
                                 <td>{booking.subject.name}</td>
                                 <td>{booking.professor.name}</td>
                                 <td>
-                                    {new Date(booking.booking.timeInit).toLocaleString()} -{" "}
-                                    {new Date(booking.booking.timeFinal).toLocaleTimeString()}
+                                    {new Date(
+                                        booking.booking.timeInit
+                                    ).toLocaleString()}{" "}
+                                    -{" "}
+                                    {new Date(
+                                        booking.booking.timeFinal
+                                    ).toLocaleTimeString()}
                                 </td>
                                 <td>
                                     <i
                                         className="fas fa-trash-alt text-danger"
                                         style={{ cursor: "pointer" }}
-                                        onClick={() => deleteBooking(booking.booking.id)}
+                                        onClick={() =>
+                                            deleteBooking(booking.booking.id)
+                                        }
                                     ></i>
                                 </td>
                             </tr>
